@@ -15,6 +15,9 @@ class CreateNovelReviewsTable extends Migration
     {
         Schema::create('novel_reviews', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('content');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
