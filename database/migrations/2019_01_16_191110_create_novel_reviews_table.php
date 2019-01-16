@@ -18,6 +18,8 @@ class CreateNovelReviewsTable extends Migration
             $table->text('content');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('novel_id')->unsigned();
+            $table->foreign('novel_id')->references('id')->on('novels')->onDelete('cascade');
             $table->timestamps();
         });
     }

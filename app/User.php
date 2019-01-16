@@ -27,4 +27,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function novels(){
+      return $this->hasMany(Novel::class);
+    }
+
+    public function novel_reviews(){
+      return $this->hasMany(NovelReview::class);
+    }
+
+
+    public function chapter_comments(){
+      return $this->hasMany(ChapterComment::class);
+    }
+
+
+
 }
