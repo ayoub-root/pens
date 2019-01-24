@@ -13,4 +13,5 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::resource('novels', 'NovelController');
+Route::resource('chapters', 'ChapterController');
 Auth::routes();

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Novel;
+use App\Chapter;
 
-class NovelController extends Controller
+class ChapterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,8 +46,8 @@ class NovelController extends Controller
      */
     public function show($id)
     {
-        $novel = Novel::findOrFail($id);
-        return view('novels.show')->with('novel', $novel);
+        $chapter = Chapter::find($id);
+        return view('chapters.show')->with('chapter', $chapter);
     }
 
     /**

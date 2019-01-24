@@ -15,7 +15,7 @@
       <h2 class="novel-chapters">Chapters : </h2>
       <ul class="list-group">
         @foreach ($novel->chapters as $chapter)
-          <li class="list-group-item"> {{$chapter->number}} </li>
+          <li class="list-group-item"> <a href="{{ route('chapters.show', ['chapters' => $chapter->id]) }}">{{$chapter->number}}</a> </li>
         @endforeach
       </ul>
     </article>
