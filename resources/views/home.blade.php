@@ -2,22 +2,17 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
+  <section class="recent-novels">
+    <h1>Recent Novels</h1>
+    <div class="row novels">
+      @foreach ($novels as $novel)
+        <article class="novel col-sm-6 align-content-center">
+          <h2 class="novel-title"> <a href="{{ route('novels.show', ['novel' => $novel->id])}}"> {{ $novel->title }}</a></h2>
+          <small>by : {{ $novel->user->name }}</small> <!-- add user profile link later -->
+          <p class="novel-description "> {{ $novel->makeExcerpt() }} </p>
+        </article>
+      @endforeach
     </div>
+  </section>
 </div>
 @endsection

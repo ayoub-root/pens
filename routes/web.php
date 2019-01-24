@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', 'HomeController@index')->name('home');
+Route::resource('novels', 'NovelController');
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -10,11 +10,19 @@ class Novel extends Model
       return $this->belongsTo(User::class);
     }
 
-    public function comments(){
+    public function chapters(){
       return $this->hasMany(Chapter::class);
     }
 
     public function reviews(){
       return $this->hasMany(NovelReview::class);
+    }
+
+
+    /*
+      CUSTOM METHODS
+    */
+    public function makeExcerpt($len = 600){
+       return (strlen($this->description) > 600) ? substr($this->description, 0, $len) . ' ...' : $this->description;
     }
 }
