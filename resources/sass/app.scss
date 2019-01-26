@@ -1,6 +1,8 @@
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Alegreya');
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+
 
 // Variables
 @import 'variables';
@@ -10,4 +12,9 @@
 
 * {
   font-family: 'Alegreya', serif;
+}
+
+nav.navbar .navbar-brand{
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem
 }

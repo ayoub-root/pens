@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
   <section class="recent-novels">
-    <h1>Recent Novels</h1>
+    <h1 class="font-weight-bold">Recent Novels</h1>
     <div class="row novels">
       @foreach ($novels as $novel)
         <article class="novel col-sm-6 align-content-center">

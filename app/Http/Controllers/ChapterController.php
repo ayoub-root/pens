@@ -22,9 +22,9 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($novel_id)
     {
-        //
+        return view('chapters.create')->with('novel_id', $novel_id);
     }
 
     /**
@@ -35,7 +35,20 @@ class ChapterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+          'title' => 'required',
+          'content' => 'required'
+        ]);
+
+        $chapter = new Chapter();
+        $chapter->title = $request->input('title');
+        $chapter->content = $request->input('content');
+        $chapter->novel_id = $request->input('novel_id');
+        $chapter->number = Chapter::where('novel_id', $request->input('novel_id'))->count() + 1;
+
+        $chapter->save();
+        return redirect('/profile');
+
     }
 
     /**

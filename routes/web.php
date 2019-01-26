@@ -11,7 +11,15 @@
 |
 */
 
+// the main index - Home - route
 Route::get('/', 'HomeController@index')->name('home');
+// Novel routes
 Route::resource('novels', 'NovelController');
-Route::resource('chapters', 'ChapterController');
+// Chapter routes
+Route::resource('chapters', 'ChapterController')->except('create');
+Route::get('/chapters/create/{novel_id}', 'ChapterController@create')->name('chapters.create');
+
+
+Route::get('/profile', 'DashboardController@index')->name('profile');
+
 Auth::routes();

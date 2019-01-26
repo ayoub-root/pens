@@ -1,5 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Alegreya);
-
+@import url(https://fonts.googleapis.com/css?family=Alegreya);@import url(https://fonts.googleapis.com/css?family=Pacifico);@charset "UTF-8";
 
 /*!
  * Bootstrap v4.2.1 (https://getbootstrap.com/)
@@ -10494,3 +10493,9 @@ a.text-dark:focus {
 * {
   font-family: "Alegreya", serif;
 }
+
+nav.navbar .navbar-brand {
+  font-family: "Pacifico", cursive;
+  font-size: 2rem;
+}
+

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -41,6 +42,10 @@ class User extends Authenticatable
       return $this->hasMany(ChapterComment::class);
     }
 
+    public function membre_since(){
+      $carbon = new Carbon($this->created_at);
+      return $carbon->toFormattedDateString();
+    }
 
 
 }
