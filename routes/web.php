@@ -15,6 +15,18 @@
 Route::get('/', 'HomeController@index')->name('home');
 // Novel routes
 Route::resource('novels', 'NovelController');
+
+
+// novelReviews routes
+Route::resource('novelReviews', 'NovelReviewController')->except(['create', 'store']);
+Route::post('/novelReviews/store/{novel_id}', 'NovelReviewController@store')->name('novelReviews.store');
+
+
+// chapterComments routes
+Route::resource('chapterComments', 'ChapterCommentController')->except(['create', 'store']);
+Route::post('/chapterComments/store/{chapter_id}', 'ChapterCommentController@store')->name('chapterComments.store');
+
+
 // Chapter routes
 Route::resource('chapters', 'ChapterController')->except('create');
 Route::get('/chapters/create/{novel_id}', 'ChapterController@create')->name('chapters.create');

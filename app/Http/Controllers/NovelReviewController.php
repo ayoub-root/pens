@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Chapter;
+use App\NovelReview;
+use Auth;
 
-class ChapterController extends Controller
+class NovelReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +23,9 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($novel_id)
+    public function create()
     {
-        return view('chapters.create')->with('novel_id', $novel_id);
+        //
     }
 
     /**
@@ -33,22 +34,19 @@ class ChapterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $novel_id)
     {
         $this->validate($request, [
-          'title' => 'required',
           'content' => 'required'
         ]);
 
-        $chapter = new Chapter();
-        $chapter->title = $request->input('title');
-        $chapter->content = $request->input('content');
-        $chapter->novel_id = $request->input('novel_id');
-        $chapter->number = Chapter::where('novel_id', $request->input('novel_id'))->count() + 1;
+        $review = new NovelReview();
+        $review->content = $request->input('content');
+        $review->novel_id = $novel_id;
+        $review->user_id = Auth::id();
 
-        $chapter->save();
+        $review->save();
         return redirect('/profile');
-
     }
 
     /**
@@ -59,8 +57,7 @@ class ChapterController extends Controller
      */
     public function show($id)
     {
-        $chapter = Chapter::find($id);
-        return view('chapters.show')->with('chapter', $chapter);
+        //
     }
 
     /**
@@ -71,7 +68,7 @@ class ChapterController extends Controller
      */
     public function edit($id)
     {
-        return view('chapters.edit')->with('chapter', Chapter::find($id));
+        return view('novelReview.edit')->with('review', NovelReview::find($id));
     }
 
     /**
@@ -84,15 +81,13 @@ class ChapterController extends Controller
     public function update(Request $request, $id)
     {
       $this->validate($request, [
-        'title' => 'required',
         'content' => 'required'
       ]);
 
-      $novel = Chapter::find($id);
-      $novel->title = $request->input('title');
-      $novel->content = $request->input('content');
-      $novel->save();
-
+      $review = NovelReview::find($id);
+      $review->content = $request->input('content');
+      
+      $review->save();
       return redirect('/profile');
     }
 
@@ -104,7 +99,7 @@ class ChapterController extends Controller
      */
     public function destroy($id)
     {
-        Chapter::destroy($id);
-        return redirect('/profile');
+      NovelReview::destroy($id);
+      return redirect('/profile');
     }
 }

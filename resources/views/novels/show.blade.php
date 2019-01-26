@@ -26,8 +26,17 @@
         <section>
           <small> {{$review->user->name}} </small>
           <p class="review"> {{$review->content}} </p>
+          <button class="btn btn-primary"><a href="{{route('novelReviews.edit', ['novelReview' => $review->id])}}">Edit</a></button>
         </section>
       @endforeach
+      <section>
+        <h3>Add a review</h3>
+        <form method="post" action="{{route('novelReviews.store', ['novel_id' => $novel->id])}}">
+          @csrf
+          <textarea name="content" type="text" class="form-control" placeholder="Write your review here"></textarea>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </section>
     </article>
 
   </div>
