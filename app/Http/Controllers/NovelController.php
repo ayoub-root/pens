@@ -3,12 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateNovelRequest;
+use App\Http\Requests\DeleteNovelRequest;
+use App\Http\Requests\EditeNovelRequest;
 use App\Novel;
 use App\Chapter ;
 use Auth;
 
 class NovelController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+      //$this->middleware('role:admin|author');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,12 +49,8 @@ class NovelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateNovelRequest $request)
     {
-        $this->validate($request, [
-          'title' => 'required',
-          'description' => 'required'
-        ]);
 
         $novel = new Novel();
         $novel->title = $request->input('title');
@@ -48,7 +58,7 @@ class NovelController extends Controller
         $novel->user_id = Auth::id();
         $novel->save();
 
-        return redirect('/profile');
+        return redirect()->back();
     }
 
     /**
@@ -71,7 +81,14 @@ class NovelController extends Controller
      */
     public function edit($id)
     {
-        return view('novels.edit')->with('novel', Novel::find($id));
+        $novel = Novel::find($id);
+        $author_id = $novel->user->id;
+        if ($author_id === auth()->id()) {
+          return view('novels.edit')->with('novel', $novel);
+        } else {
+          return redirect()->back();
+        }
+
     }
 
     /**
@@ -81,19 +98,14 @@ class NovelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditeNovelRequest $request, $id)
     {
-      $this->validate($request, [
-        'title' => 'required',
-        'description' => 'required'
-      ]);
-
       $novel = Novel::find($id);
       $novel->title = $request->input('title');
       $novel->description = $request->input('description');
       $novel->save();
 
-      return redirect('/profile');
+      return redirect()->back();
     }
 
     /**
@@ -102,10 +114,10 @@ class NovelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DeleteNovelRequest $request, $id)
     {
         chapter::where('novel_id', $id)->delete();
         Novel::destroy($id);
-        return redirect('/profile');
+        return redirect()->back();
     }
 }

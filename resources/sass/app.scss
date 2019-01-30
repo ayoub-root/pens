@@ -2,6 +2,17 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Alegreya');
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+@import url('https://fonts.googleapis.com/css?family=Crimson+Text');
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif');
+//font-family: 'Libre Baskerville', serif;font-family: 'Noto Serif', serif;
+//font-family: 'Crimson Text', serif;
+
+
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
 
 
 // Variables
@@ -10,11 +21,136 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-* {
-  font-family: 'Alegreya', serif;
-}
 
 nav.navbar .navbar-brand{
   font-family: 'Pacifico', cursive;
-  font-size: 2rem
+  font-size: 2.2rem
+}
+
+p {
+  font-family: 'Alegreya', serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 1.8
+}
+
+.novel {
+  border: 1px solid #dfe6e9;
+  border-radius: 5px;
+  padding: 2rem 2.3rem;
+  margin-bottom: 2rem;
+  box-shadow: 0px 4px 18px -6px rgba(178,190,195,1);
+
+  .novel-title {
+    margin-bottom: .1rem;
+    a {
+      color: #2d3436;
+      text-decoration: none;
+    }
+  }
+
+  .author {
+    font-size: .9rem;
+    color: #636e72;
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+.recent-novels {
+  h1 {
+    color: #2d3436;
+    margin-bottom: 3rem
+  }
+
+  }
+}/* END of .novel*/
+
+.novel-reviews,
+.chapter-comments {
+  .novel-reviews-title,
+  .comments-title {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .review,
+  .comment {
+    border: 1px solid #dfe6e9;
+    border-radius: 1px;
+    padding: 2rem 2.3rem;
+    margin-bottom: 2rem;
+    box-shadow: 0px 4px 18px -6px rgba(178,190,195,1);
+
+    .review-author,
+    .comment-author{
+      font-size: 1rem
+    }
+
+    .review-content {
+      font-size: 1.2rem;
+    }
+
+    a {
+      font-size: 1rem
+    }
+  }
+
+  .review-form, .comment-form {
+    h3 {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+    form {
+      textarea {
+        margin-bottom: 2rem;
+        height: 10rem
+      }
+    }
+  }
+}
+
+.list-group {
+  list-style-type: none;
+}
+
+.novel-chapters{
+  flex-direction: row
+}
+
+.box {
+  background-color:  #2d3436;
+  display: inline-block;
+  padding: .5rem 1rem;
+  margin-right: .6rem;
+  width: 50px;
+  border-radius: 10px;
+  color: #fff
+}
+
+button {
+  background-color: transparent;
+  border: none;
+}
+
+.chapter-title {
+  margin-bottom: .1rem;
+  a {
+    color: #2d3436;
+    text-decoration: none;
+  }
+}
+
+.author {
+  font-size: .9rem;
+  color: #636e72;
+  display: block;
+  margin-bottom: 1.2rem;
+}
+
+
+.user-novels {
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem
+  }
 }

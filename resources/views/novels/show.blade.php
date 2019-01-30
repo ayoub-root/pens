@@ -5,31 +5,38 @@
   <div class="row justify-content-center">
 
     <article class="novel col-md-8">
-      <h1 class="novel-title"><a href="{{ route('novels.show', ['novel' => $novel->id])}}"> {{ $novel->title }}</a></h1>
-      <small>by : {{ $novel->user->name }}</small> <!-- add user profile link later -->
+      <h1 class="novel-title font-weight-bold"><a href="{{ route('novels.show', ['novel' => $novel->id])}}"> {{ $novel->title }}</a></h1>
+      <small class="author">By :</small> <!-- add user profile link later -->
       <p class="novel-description"> {{ $novel->description }} </p>
     </article>
 
 
-    <article class="novel col-md-8">
-      <h2 class="novel-chapters">Chapters : </h2>
-      <ul class="list-group">
-        @foreach ($novel->chapters as $chapter)
-          <li class="list-group-item"> <a href="{{ route('chapters.show', ['chapters' => $chapter->id]) }}">{{$chapter->number}}</a> </li>
-        @endforeach
-      </ul>
+    <article class="col-md-8">
+        @if ($novel->chapters->isEmpty())
+          <p class="font-weight-light">No chapters yet</p>
+        @else
+          <h2 class="novel-chapters">Chapters : </h2>
+          <ul class="list-group novel-chapters">
+            @foreach ($novel->chapters as $chapter)
+              <a href="{{ route('chapters.show', ['chapters' => $chapter->id]) }}"><li class="box text-center">{{$chapter->number}} </li></a>
+            @endforeach
+        @endif
+        </ul>
     </article>
 
     <article class="novel-reviews col-md-8">
-      <h2 class="novel-reviews">Reviews</h2>
+      <h2 class="novel-reviews-title">Reviews</h2>
+      <div class="novel-info">
+        <p class="reviews-number">{{ $novel->reviews->count() }} review(s)</p>
+      </div>
       @foreach ($novel->reviews as $review)
-        <section>
-          <small> {{$review->user->name}} </small>
-          <p class="review"> {{$review->content}} </p>
-          <button class="btn btn-primary"><a href="{{route('novelReviews.edit', ['novelReview' => $review->id])}}">Edit</a></button>
+        <section class="review">
+          <small class="author review-author">  </small>
+          <p class="review-content"> {{$review->content}} </p>
+          <a href="{{route('novelReviews.edit', ['novelReview' => $review->id])}}"><i class="far fa-edit"></i></a>
         </section>
       @endforeach
-      <section>
+      <section class="review-form">
         <h3>Add a review</h3>
         <form method="post" action="{{route('novelReviews.store', ['novel_id' => $novel->id])}}">
           @csrf
