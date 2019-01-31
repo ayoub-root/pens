@@ -32,6 +32,12 @@ Route::resource('chapters', 'ChapterController')->except('create');
 Route::get('/chapters/create/{novel_id}', 'ChapterController@create')->name('chapters.create');
 
 
+
 Route::get('/profile', 'DashboardController@index')->name('profile');
 
+Route::group(['middleware' => ['role:admin']], function(){
+
+});
+Route::get('/profile/novels', 'DashboardController@novels')->name('novels');
+Route::get('/profile/users', 'DashboardController@users')->name('users');
 Auth::routes();

@@ -8,12 +8,21 @@
       <h1 class="chapter-title font-weight-bold"><a href="{{ route('chapters.show', ['chapter' => $chapter->id]) }}"> {{ $chapter->title }}</a></h1>
       <h2 class="chapter-number font-weight-bold">Chapter {{ $chapter->number }}</h2>
       <small class="author">by : {{ $chapter->novel->user->name }}</small> <!-- add user profile link later -->
-      <form method="post" action="{{route('chapters.destroy', ['chapter' => $chapter->id])}}">
-        @method('DELETE')
-        @csrf
-        <button type="submit"><i class="far fa-trash-alt text-center"></i></button>
-      </form>
-      <a class="box text-center" href="{{ route('chapters.edit', ['chapter' => $chapter->id]) }}"><i title="edit chapter" class="far fa-edit"></i></a>
+
+      @if (auth()->check())
+        @if (auth()->user()->canAndOwns('delete-chapter', $chapter->novel) || auth()->user()->hasRole('admin'))
+          <form method="post" action="{{route('chapters.destroy', ['chapter' => $chapter->id])}}">
+            @method('DELETE')
+            @csrf
+            <button type="submit"><i class="far fa-trash-alt text-center"></i></button>
+          </form>
+        @endif
+
+        @if (auth()->id() === $chapter->novel->user_id || auth()->user()->hasRole('admin'))
+            <a class="box text-center" href="{{ route('chapters.edit', ['chapter' => $chapter->id]) }}"><i title="edit chapter" class="far fa-edit"></i></a>
+        @endif
+      @endif
+
       <p class="chapter-content"> {{ $chapter->content }} </p>
     </article>
 
@@ -28,7 +37,11 @@
           <section class="comment">
             <small class="comment-author"> {{$comment->user->name}} </small>
             <p class=""> {{$comment->content}} </p>
-            <a href="{{route('chapterComments.edit', ['ChapterComment' => $comment->id])}}"><i title="edit comment" class="far fa-edit"></i></a>
+            @if (auth()->check())
+              @if (auth()->id() === $comment->user->id || auth()->user()->hasRole('admin'))
+                  <a href="{{route('chapterComments.edit', ['ChapterComment' => $comment->id])}}"><i title="edit comment" class="far fa-edit"></i></a>
+              @endif
+            @endif
           </section>
         @endforeach
       @endif

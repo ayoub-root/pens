@@ -6,8 +6,21 @@
 
     <article class="novel col-md-8">
       <h1 class="novel-title font-weight-bold"><a href="{{ route('novels.show', ['novel' => $novel->id])}}"> {{ $novel->title }}</a></h1>
-      <small class="author">By :</small> <!-- add user profile link later -->
+      <small class="author">By : {{ $novel->user->name }}</small> <!-- add user profile link later -->
       <p class="novel-description"> {{ $novel->description }} </p>
+      @if (auth()->check())
+        @if (auth()->user()->canAndOwns('delete-novel', $novel) || auth()->user()->hasRole('admin'))
+          <form method="post" action="{{route('novels.destroy', ['novel' => $novel->id])}}">
+            @method('DELETE')
+            @csrf
+            <button title="delete novel" type="submit"><i class="far fa-trash-alt"></i></button>
+          </form>
+        @endif
+
+        @if (auth()->user()->canAndOwns('update-novel', $novel) || auth()->user()->hasRole('admin'))
+            <a class="box text-center" href="{{ route('novels.edit', ['novel' => $novel->id]) }}"><i title="edit novel" class="far fa-edit"></i></a>
+        @endif
+      @endif
     </article>
 
 
@@ -33,7 +46,11 @@
         <section class="review">
           <small class="author review-author">  </small>
           <p class="review-content"> {{$review->content}} </p>
-          <a href="{{route('novelReviews.edit', ['novelReview' => $review->id])}}"><i class="far fa-edit"></i></a>
+          @if (auth()->check())
+            @if (auth()->id() === $review->user->id || auth()->user()->hasRole('admin'))
+                <a href="{{route('novelReviews.edit', ['novelReview' => $review->id])}}"><i class="far fa-edit"></i></a>
+            @endif
+          @endif
         </section>
       @endforeach
       <section class="review-form">
